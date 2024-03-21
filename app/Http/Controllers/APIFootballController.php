@@ -9,7 +9,7 @@ class APIFootballController extends Controller
 {
     public function index(){
         $client = new Client();
-        $response = $client->get(config('API_URL.API_URL'). "/?action=get_leagues&country_id=44&APIkey=". config('API_URL.API_KEY'));
+        $response = $client->get(config('app.APIURL.API_URL'). "/?action=get_leagues&country_id=44&APIkey=". config('app.APIURL.API_KEY'));
         $league = json_decode($response->getBody()->getContents());
 
         return view('dashboard', compact('league'));  
@@ -17,7 +17,7 @@ class APIFootballController extends Controller
     
     public function teams(string $leagueId){
         $client = new Client();
-        $response = $client->get(config('API_URL.API_URL'). "/?action=get_teams&league_id=". $leagueId ."&APIkey=". config('API_URL.API_KEY'));
+        $response = $client->get(config('app.APIURL.API_URL'). "/?action=get_teams&league_id=". $leagueId ."&APIkey=". config('app.APIURL.API_KEY'));
         $teams = json_decode($response->getBody()->getContents());
         
         return view('teams', compact('teams'));  
@@ -25,7 +25,7 @@ class APIFootballController extends Controller
     
     public function standings(string $leagueId){
         $client = new Client();
-        $response = $client->get(config('API_URL.API_URL'). "/?action=get_standings&league_id=". $leagueId. "&APIkey=". config('API_URL.API_KEY'));
+        $response = $client->get(config('app.APIURL.API_URL'). "/?action=get_standings&league_id=". $leagueId. "&APIkey=". config('app.APIURL.API_KEY'));
         $standings = json_decode($response->getBody()->getContents());
         if(!is_array($standings)){
             return redirect()->back()->with('error', "it's not a league, it's a competitions event");
